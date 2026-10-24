@@ -2,7 +2,7 @@
 package com.startup.registration.security;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Bean;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +29,7 @@ public class SecurityConfig {
             	        "/api/founders/check-email",
             	        "/api/files/upload",
             	        "/api/health",
+            	        "/api/founders/login",
             	        "/api/founders/health",
             	        "/api/startups/save",
             	        "/api/startups/founder",

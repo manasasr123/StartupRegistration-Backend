@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.startup.registration.entity.Founder;
 import com.startup.registration.repository.FounderRepository;
 import com.startup.registration.service.FounderService;
+import java.util.Optional;
 
 @Service
 public class FounderServiceImpl implements FounderService {
@@ -38,6 +39,18 @@ public class FounderServiceImpl implements FounderService {
                 passwordEncoder.encode(founder.getPassword()));
 
         return founderRepository.save(founder);
+    }
+    @Override
+    public Founder loginFounder(String email, String password) {
+        Founder founder = founderRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Invalid email or password"));
+
+        if (!passwordEncoder.matches(password, founder.getPassword())) {
+            throw new IllegalArgumentException("Invalid email or password");
+        }
+
+        return founder;
     }
 
     @Override

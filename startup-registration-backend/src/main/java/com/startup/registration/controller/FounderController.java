@@ -2,6 +2,7 @@
 package com.startup.registration.controller;
 
 import org.springframework.http.HttpStatus;
+import com.startup.registration.dto.request.FounderLoginRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,6 +52,34 @@ public class FounderController {
     public ResponseEntity<Boolean> checkEmail(@RequestParam String email) {
         return ResponseEntity.ok(founderService.emailExists(email));
     }
+    
+
+@PostMapping("/login")
+public ResponseEntity<?> loginFounder(
+        @Valid @RequestBody FounderLoginRequest request) {
+    try {
+        Founder founder = founderService.loginFounder(
+                request.getEmail(),
+                request.getPassword()
+        );
+
+        return ResponseEntity.ok(
+                java.util.Map.of(
+                        "message", "Login successful",
+                        "id", founder.getId(),
+                        "fullName", founder.getFullName(),
+                        "email", founder.getEmail()
+                )
+        );
+
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(java.util.Map.of(
+                        "message", "Invalid email or password"
+                ));
+    }
+}
+
     
 
     @GetMapping("/health")

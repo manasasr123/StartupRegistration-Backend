@@ -35,7 +35,9 @@ public class SecurityConfig {
             	        "/api/startups/founder",
             	        "/api/startups/details",
             	        "/api/founder-profiles/save",
+            	        "/api/founder-profiles/founder",
             	        "/api/team-members/save",
+            	        "/api/team-members/founder",
             	        "/api/registration-documents/**"
             	    ).permitAll()
             	    .anyRequest().authenticated()

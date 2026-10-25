@@ -1,5 +1,7 @@
 package com.startup.registration.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.startup.registration.dto.request.StartupDetailsRequest;
@@ -66,5 +68,10 @@ public class StartupDetailsServiceImpl implements StartupDetailsService {
         details.setFundingStage(request.getFundingStage());
 
         startupDetailsRepository.save(details);
+    }
+    
+    @Override
+    public Optional<StartupDetails> getStartupDetails(Founder founder) {
+        return startupDetailsRepository.findByFounder(founder);
     }
 }

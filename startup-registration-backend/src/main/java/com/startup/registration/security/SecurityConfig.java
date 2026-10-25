@@ -33,6 +33,7 @@ public class SecurityConfig {
             	        "/api/founders/health",
             	        "/api/startups/save",
             	        "/api/startups/founder",
+            	        "/api/startups/details",
             	        "/api/founder-profiles/save",
             	        "/api/team-members/save",
             	        "/api/registration-documents/**"

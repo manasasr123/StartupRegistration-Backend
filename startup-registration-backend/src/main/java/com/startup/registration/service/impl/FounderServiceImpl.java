@@ -57,4 +57,21 @@ public class FounderServiceImpl implements FounderService {
     public boolean emailExists(String email) {
         return founderRepository.existsByEmail(email);
     }
+    
+    @Override
+    public void resetPassword(String email, String newPassword) {
+        Founder founder = founderRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Founder not found"));
+
+        if (newPassword == null
+                || newPassword.length() < 8
+                || newPassword.length() > 72) {
+            throw new IllegalArgumentException(
+                    "Password must contain 8 to 72 characters");
+        }
+
+        founder.setPassword(passwordEncoder.encode(newPassword));
+        founderRepository.save(founder);
+    }
 }

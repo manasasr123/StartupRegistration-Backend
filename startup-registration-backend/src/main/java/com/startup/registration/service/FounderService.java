@@ -10,4 +10,6 @@ public interface FounderService {
     boolean emailExists(String email);
 
     Founder loginFounder(String email, String password);
+    
+    void resetPassword(String email, String newPassword);
 }

@@ -1,6 +1,9 @@
 package com.startup.registration.controller;
 
 import org.springframework.http.HttpStatus;
+import java.util.Optional;
+import com.startup.registration.entity.StartupDetails;
+import com.startup.registration.entity.Founder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,5 +53,25 @@ public class StartupDetailsController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body("Startup details saved successfully");
+    }
+    
+    @GetMapping("/details")
+    public ResponseEntity<?> getStartupDetails(@RequestParam String email) {
+
+        Optional<Founder> founderOptional =
+                founderRepository.findByEmail(email);
+
+        if (founderOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Founder not found");
+        }
+
+        Optional<StartupDetails> details =
+                startupDetailsService.getStartupDetails(founderOptional.get());
+
+        return details.<ResponseEntity<?>>map(ResponseEntity::ok)
+                .orElseGet(() ->
+                        ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                .body("No saved startup details found"));
     }
 }
